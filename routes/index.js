@@ -39,7 +39,14 @@ router.post('/createLeadSalesforce', async (req, res) => {
 
       res.json(leadResponse.data);
   } catch (error) {
-      res.status(500).json({ error: error.response ? error.response.data : error.message });
+      console.error('Error creating lead:', error);
+      if (error.response) {
+          console.error('Error response data:', error.response.data);
+          res.status(500).json({ error: error.response.data });
+      } else {
+          console.error('Error message:', error.message);
+          res.status(500).json({ error: error.message });
+      }
   }
 });
 
